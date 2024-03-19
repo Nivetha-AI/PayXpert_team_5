@@ -1,9 +1,10 @@
 package com.controller;
 
-public class EmployeeController {
+public class test {
 
 	public static void main(String[] args) {
-		// nivetha 
+		System.out.println("test");
+
 	}
 
 }

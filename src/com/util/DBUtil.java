@@ -9,9 +9,9 @@ public class DBUtil {
 	public static Connection getDBConn() {
 		/* Step 1: Defined all DB variable */
 		String usernameDb = "root";
-		String passwordDb = "root";
+		String passwordDb = "";
 		String urlDb = "jdbc:mysql://localhost:3306/payxpertdb";
-		String driverName = "com.mysql.cj.jdbc.Driver";
+		String driverName = "com.mysql.jdbc.Driver";
 
 		/* Step 2: Load The driver */
 		try {

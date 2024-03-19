@@ -65,7 +65,7 @@ public class PayrollController {
 					break;
 				case 4:
 					System.out.println("Payroll for Period");
-					System.out.println("Enter the payroll start date");
+					System.out.println("Enter the payroll s+tart date");
 					String date1=s.next();
 					System.out.println("Enter the payroll end date");
 					String date2=s.next();
@@ -86,6 +86,12 @@ public class PayrollController {
 					break;
 				
 			}// Switch ends
+			
 		}//while Ends
+		
+		
 	}//main ends
 }//class ends
+
+
+
