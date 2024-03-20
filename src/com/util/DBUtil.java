@@ -11,7 +11,7 @@ public class DBUtil {
 		String usernameDb = "root";
 		String passwordDb = "";
 		String urlDb = "jdbc:mysql://localhost:3306/payxpertdb";
-		String driverName = "com.mysql.jdbc.Driver";
+		String driverName = "com.mysql.jdbc.Driver"; //com.mysql.cj.jdbc.Driver - for sql connector 8.0.33
 
 		/* Step 2: Load The driver */
 		try {
@@ -33,7 +33,6 @@ public class DBUtil {
 
 		return conn;
 	}
-
 	public static void dbClose() {
 		try {
 			conn.close();

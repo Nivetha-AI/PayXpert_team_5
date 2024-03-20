@@ -80,9 +80,9 @@ public class PayrollDaoImpl implements PayrollDao {
 
 
 	@Override
-	public Payroll getPayrollByEmployeeId(int empid) throws SQLException,EmployeeNotFoundException {
+	public List<Payroll> getPayrollByEmployeeId(int empid) throws SQLException,EmployeeNotFoundException {
 		Connection conn=DBUtil.getDBConn();
-		
+		List<Payroll> list=new ArrayList<>();
 		String sql="Select * from payroll where employee_id=?";
 		
 		PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -91,7 +91,7 @@ public class PayrollDaoImpl implements PayrollDao {
 		
 		ResultSet rst= pstmt.executeQuery();
 		
-		if(rst.next())
+		while(rst.next())
 		{
 			int pid=rst.getInt("id");
 			LocalDate payperiodStartDate = rst. getDate("payperiod_startdate").toLocalDate();
@@ -104,10 +104,14 @@ public class PayrollDaoImpl implements PayrollDao {
 			
 			Payroll payroll=new Payroll(pid,eid,payperiodStartDate,payperiodEndDate,basicSalary,overtimePay,deductions,netSalary);
 			
-			return payroll;
+			list.add(payroll);
 		}
 		DBUtil.dbClose();
-		throw new EmployeeNotFoundException("Invalid Employee Id");
+		if(list.isEmpty())
+		{
+			throw new EmployeeNotFoundException("Invalid Employee Id");
+		}
+		return list;
 	}
 
 
@@ -145,6 +149,27 @@ public class PayrollDaoImpl implements PayrollDao {
 			throw new PayrollGenerationException("No payrolls in the specified dates");
 		}
 		return list;
+	}
+
+
+	@Override
+	public void createEmployees(LocalDate startDate, LocalDate endDate, double salary, double opay, double deductions,
+			double netSalary, int eid) throws SQLException {
+		Connection conn=DBUtil.getDBConn();
+		
+		String sql="insert into payroll(payperiod_startdate,payperiod_enddate,Basic_salary,overtime_pay,Deductions,net_salary,employee_id) values(?,?,?,?,?,?,?)";
+		
+		PreparedStatement pstmt=conn.prepareStatement(sql);
+		pstmt.setObject(1, startDate);
+		pstmt.setObject(2, endDate);
+		pstmt.setDouble(3,salary);
+		pstmt.setDouble(4,opay);
+		pstmt.setDouble(5,deductions);
+		pstmt.setDouble(6,netSalary);
+		pstmt.setInt(7, eid);
+		
+		pstmt.executeUpdate();
+		
 	}
 	
 }

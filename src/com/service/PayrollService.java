@@ -20,12 +20,16 @@ public class PayrollService {
 		
 		return payrollDao.generatePayroll();
 	}
-	public Payroll getPayrollByEmployeeId(int eid) throws SQLException, EmployeeNotFoundException {
+	public List<Payroll> getPayrollByEmployeeId(int eid) throws SQLException, EmployeeNotFoundException {
 		
 		return payrollDao.getPayrollByEmployeeId(eid);
 	}
 	public List<Payroll> getPayrollForPeriod(LocalDate startDate, LocalDate endDate) throws SQLException, PayrollGenerationException {
 		return payrollDao.getPayrollForPeriod(startDate,endDate);
+	}
+	public void createEmployees(LocalDate startDate, LocalDate endDate, double salary, double opay, double deductions,
+			double netSalary, int eid) throws SQLException {
+		payrollDao.createEmployees(startDate,endDate,salary,opay,deductions,netSalary,eid);
 	}
 
 }
