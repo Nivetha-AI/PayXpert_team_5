@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+import com.dto.EmployeeReportData;
 import com.exception.EmployeeNotFoundException;
 import com.exception.ValidationException;
 import com.model.Employee;
@@ -42,6 +43,8 @@ public class EmployeeController {
 					System.out.println("Press 3. to insert the Employee record ");
 					System.out.println("Press 4. to Update all the employees record");
 					System.out.println("press 5. to Delete the Employee record ");
+					System.out.println(
+							"press 6. to Generate detail report including Tax and Financial Record for Employee based on Financial year");
 					System.out.println("Press 0. to Exit");
 					System.out.println("**********************************************");
 
@@ -175,11 +178,33 @@ public class EmployeeController {
 						}
 
 						break;
+
+					case 6:
+						System.out.println("Enter employee Id : ");
+						int empid = sc.nextInt();
+						System.out.println("Enter Financial Year (YYYY): ");
+						String fyear1 = sc.next();
+						int fyear = Integer.parseInt(fyear1);
+						try {
+							List<EmployeeReportData> list = employeeService.getReport(empid, fyear);
+
+							for (EmployeeReportData emp1 : list) {
+								System.out.println(" First Name: " + emp1.getFirstName() + " Last Name: "
+										+ emp1.getLastName() + " Taxable Income: " + emp1.getTaxableIncome()
+										+ " Tax Year: " + emp1.getTaxYear() + "  Tax Amount: " + emp1.getTaxAmount()
+										+ " Record Date: " + emp1.getRecordDate() + " record Type: "
+										+ emp1.getRecordType() + " Financial Amount: " + emp1.getAmount());
+							}
+						} catch (SQLException e) {
+							System.out.println(e.getMessage());
+						}
+
+						break;
 					default:
 						System.out.println("Invalid Input given..");
 						break;
 
-					}
+					}//switch ends
 
 				} // while ends
 			} // if ends
@@ -187,6 +212,8 @@ public class EmployeeController {
 				while (true) {
 					System.out.println("************Employee Info System for Employee************");
 					System.out.println("Press 1. Get all the Employees by ID ");
+					System.out.println(
+							"press 2. to Generate detail report including Tax and Financial Record for Employee based on Financial year");
 					System.out.println("Press 0. to Exit");
 					System.out.println("**********************************************");
 
@@ -212,6 +239,28 @@ public class EmployeeController {
 							System.out.println(e.getMessage());
 						}
 						break;
+					case 2:
+						System.out.println("Enter employee Id : ");
+						int empid = sc.nextInt();
+						System.out.println("Enter Financial Year (YYYY): ");
+						String fyear1 = sc.next();
+						int fyear = Integer.parseInt(fyear1);
+						try {
+							List<EmployeeReportData> list = employeeService.getReport(empid, fyear);
+
+							for (EmployeeReportData emp1 : list) {
+								System.out.println(" First Name: " + emp1.getFirstName() + " Last Name: "
+										+ emp1.getLastName() + " Taxable Income: " + emp1.getTaxableIncome()
+										+ " Tax Year: " + emp1.getTaxYear() + "  Tax Amount: " + emp1.getTaxAmount()
+										+ " Record Date: " + emp1.getRecordDate() + " record Type: "
+										+ emp1.getRecordType() + " Financial Amount: " + emp1.getAmount());
+							}
+						} catch (SQLException e) {
+							System.out.println(e.getMessage());
+						}
+
+						break;
+
 					default:
 						System.out.println("Invalid Input given..");
 						break;

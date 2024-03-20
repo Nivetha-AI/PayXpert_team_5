@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.dao.EmployeeDaoImpl;
+import com.dto.EmployeeReportData;
 import com.exception.EmployeeNotFoundException;
 import com.model.Employee;
 
@@ -35,6 +36,12 @@ public class EmployeeService {
 	public void deleteEmployee(int id) throws EmployeeNotFoundException, SQLException {
 		employeeDao.deleteEmployee(id);
 
+	}
+
+	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException {
+		List<EmployeeReportData> list = employeeDao.getReport(empid, fyear);
+
+		return list;
 	}
 
 }

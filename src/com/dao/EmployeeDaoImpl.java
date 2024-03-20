@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dto.EmployeeReportData;
 import com.exception.EmployeeNotFoundException;
 import com.model.Employee;
 
@@ -28,7 +30,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		ResultSet rst = pstmt.executeQuery();
 		// Iterate over the result set and read db column
 		if (rst.next()) {
-			
+
 			String firstName = rst.getString("First_name");
 			String lastName = rst.getString("Last_name");
 			LocalDate dateOfBirth = LocalDate.parse(rst.getString("Date_of_Birth"));
@@ -58,15 +60,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public List<Employee> getAllEmployee() throws SQLException {
 		Connection conn = DBUtil.getDBConn();
 		List<Employee> list = new ArrayList<>();// container
-		
+
 		String sql = "select * from Employee";
-	
+
 		PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
-	
 		ResultSet rst = pstmt.executeQuery();
 
-		
 		while (rst.next()) {
 			int id = rst.getInt("Id");
 			String firstName = rst.getString("First_name");
@@ -181,6 +181,42 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 
 		DBUtil.dbClose();
+
+	}
+
+	@Override
+	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException {
+		Connection conn = DBUtil.getDBConn();
+		List<EmployeeReportData> list = new ArrayList<>();// container
+		// step 1:prepare the statement
+		String sql = "select e.first_name , e.last_name , t.taxable_income ,t.tax_year, t.tax_amount , f.record_date , f.record_type,f.amount "
+				+ " from tax t join employee e on e.id=t.employee_id join financial_record f on e.id=f.employee_id where e.id=? and year(f.record_date)=?";
+
+		PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
+		// Attach the value to ?
+		pstmt.setInt(1, empid);
+		pstmt.setInt(2, fyear);
+		// execute the statement
+		ResultSet rst = pstmt.executeQuery();
+		// Iterate over the result set and read db column
+		if (rst.next()) {
+			String FirstName = rst.getString("First_name");
+			String LastName = rst.getString("Last_name");
+			Double taxableIncome = rst.getDouble("taxable_income");
+			Year taxYear = Year.of(rst.getInt("tax_year"));
+			double taxAmount = rst.getDouble("tax_amount");
+			LocalDate RecordDate = LocalDate.parse(rst.getString("record_date"));
+			String RecordType = rst.getString("record_type");
+			double amount = rst.getDouble("amount");
+
+			// save it in object
+			EmployeeReportData empReport = new EmployeeReportData(FirstName, LastName, taxableIncome, taxYear,
+					taxAmount, RecordDate, RecordType, amount);
+
+			list.add(empReport);
+		}
+		DBUtil.dbClose();
+		return list;
 
 	}
 
