@@ -30,4 +30,12 @@ public class FinancialRecordService {
 		return financialRecordDao.getFinancialRecordsForEmployee(employeeId);
 	}
 
+	public List<FinancialRecord> getFinancialRecordsForDate(LocalDate recordDate) throws FinancialRecordException, SQLException {
+		return financialRecordDao.getFinancialRecordsForDate(recordDate);
+	}
+
+	public void removeFinancialRecordByEmployee(int empID) throws SQLException, FinancialRecordException {
+		financialRecordDao.removeFinancialRecordByEmployee(empID);	
+	}
+
 }

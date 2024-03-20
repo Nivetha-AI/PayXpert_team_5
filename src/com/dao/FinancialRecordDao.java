@@ -19,4 +19,8 @@ public interface FinancialRecordDao {
 
 	List<FinancialRecord> getFinancialRecordsForEmployee(int employeeId)throws FinancialRecordException, SQLException;
 
+	List<FinancialRecord> getFinancialRecordsForDate(LocalDate recordDate)throws FinancialRecordException, SQLException;
+
+	void removeFinancialRecordByEmployee(int empID) throws SQLException, FinancialRecordException;
+
 }

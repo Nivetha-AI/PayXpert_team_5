@@ -24,14 +24,14 @@ public class FinancialRecordController {
 			System.out.println("Press 2. To Get Financial Record by Id");
 			System.out.println("Press 3. To Get Financial Records for employee");
 			System.out.println("Press 4. To Get Financial Records for date");
-			System.out.println("Press 5. To Delete Financial Record by RecordId");
+			System.out.println("Press 5. To Delete Financial Record for specific employee");
 			System.out.println("Press 0. To exit all operations..");
 			
-			System.out.println("Enter the operation that you want to perform:");
+			System.out.println("\nEnter the operation that you want to perform:");
 			int input = sc.nextInt();
 
 			if (input == 0) {
-				System.out.println("Exiting Financial Record Operations... Thank You!");
+				System.out.println("\nExiting Financial Record Operations... Thank You!");
 				break;
 			}
 			
@@ -56,6 +56,7 @@ public class FinancialRecordController {
 					System.out.println("Enter the record type: (Income / Expense / Tax  / Payroll / Assets");
 					String recordType = sc.next();
 					financialRecordService.AddFinancialRecord(recordId, empId, recordDate, description, amount, recordType);
+					System.out.println("\nFinancial Record added successfully\n");
 				} catch (EmployeeNotFoundException |DateTimeParseException| SQLException e) {
 					System.out.println(e.getMessage());
 				}
@@ -69,6 +70,7 @@ public class FinancialRecordController {
 					FinancialRecord financialRecord = financialRecordService.getFinancialRecordById(recId);
 					System.out.println("Financial Record Details for given record id :");
 					System.out.println(financialRecord);
+					System.out.println();
 				} catch (FinancialRecordException |SQLException e) {
 					System.out.println(e.getMessage());
 				}
@@ -87,10 +89,43 @@ public class FinancialRecordController {
 					for (FinancialRecord f : list) {
 						System.out.println(f);
 					}
+					System.out.println();
 				} catch (EmployeeNotFoundException | SQLException | FinancialRecordException e) {
 					System.out.println(e.getMessage());
 				} 
+				break;
 				
+			case 4:
+				// To get financial records for specific date
+				System.out.println("Enter the date for which the record is to be fetched: ");
+				String date = sc.next().trim();
+				LocalDate recordDate = LocalDate.parse(date);
+				List<FinancialRecord> list;
+				try {
+					list = financialRecordService.getFinancialRecordsForDate(recordDate);
+					System.out.println("Financial Records found on the date : "+ date);
+					for(FinancialRecord f : list) {
+						System.out.println(f);
+					}
+					System.out.println();
+				} catch (FinancialRecordException | SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+				
+			case 5:
+				// To delete financial record for specific employee
+				System.out.println("Enter the employee id for whom the records are to be deleted: ");
+				int empID = sc.nextInt();
+				try {
+					financialRecordService.verifyEmployeeId(empID);
+					financialRecordService.removeFinancialRecordByEmployee(empID);
+					System.out.println("Financial Record for specified employee removed successfully");
+					System.out.println();
+				}catch(EmployeeNotFoundException | SQLException | FinancialRecordException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
 				
 			}// switch ends
 

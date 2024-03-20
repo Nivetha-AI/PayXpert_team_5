@@ -94,10 +94,58 @@ public class FinancialRecordDaoImpl implements FinancialRecordDao {
 			//save it in an object
 			FinancialRecord financialRecord = new FinancialRecord(id, employeeID, recordDate, description, amount, recordType);
 			list.add(financialRecord);
-			return list; 
+			 
 		}
 		DBUtil.dbClose();
-		throw new FinancialRecordException("No record found for the given Employee");
+		if(list.isEmpty()) {
+			throw new FinancialRecordException("No financial record found for the given employee");
+		}
+		return list;
+	}
+
+	@Override
+	public List<FinancialRecord> getFinancialRecordsForDate(LocalDate recordDate) throws FinancialRecordException, SQLException {
+		Connection conn=DBUtil.getDBConn();
+		List<FinancialRecord> list = new ArrayList<>();
+		String sql="select * from financial_record where record_date=?";
+		PreparedStatement pstmt=conn.prepareStatement(sql);
+		pstmt.setString(1, recordDate.toString());
+		/* execute the statement */
+		ResultSet rst= pstmt.executeQuery();
+		while(rst.next()) { 
+			int id = rst.getInt("id");
+			java.sql.Date sqlrecordDate = rst.getDate("record_date");
+			LocalDate recordDate1 = sqlrecordDate.toLocalDate();
+			String description = rst.getString("description");
+			double amount = rst.getDouble("amount");
+			String recordType = rst.getString("record_type");
+			int employeeID = rst.getInt("employee_id");
+			
+			//save it in an object
+			FinancialRecord financialRecord = new FinancialRecord(id, employeeID, recordDate1, description, amount, recordType);
+			list.add(financialRecord);
+			
+		}
+				
+		DBUtil.dbClose();
+		if(list.isEmpty()) {
+			throw new FinancialRecordException("No financial record found for the given date");
+		}
+		return list;
+		
+	}
+
+	@Override
+	public void removeFinancialRecordByEmployee(int empID) throws SQLException, FinancialRecordException {
+		Connection conn = DBUtil.getDBConn();
+		String sql="delete from financial_record where employee_id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, empID);
+		int rowsModified = pstmt.executeUpdate();
+		DBUtil.dbClose();
+		if (rowsModified == 0) {
+			throw new FinancialRecordException("No record found with this employee");
+		}
 	}
 
 }
