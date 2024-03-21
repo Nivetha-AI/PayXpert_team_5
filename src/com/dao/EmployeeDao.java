@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.dto.EmployeeReportData;
 import com.exception.EmployeeNotFoundException;
+import com.exception.FinancialRecordException;
 import com.model.Employee;
 
 public interface EmployeeDao {
@@ -21,6 +22,6 @@ public interface EmployeeDao {
 
 	public void deleteEmployee(int id) throws EmployeeNotFoundException, SQLException;
 
-	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException;
+	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException, FinancialRecordException;
 
 }

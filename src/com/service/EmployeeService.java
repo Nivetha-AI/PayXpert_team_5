@@ -7,6 +7,7 @@ import java.util.List;
 import com.dao.EmployeeDaoImpl;
 import com.dto.EmployeeReportData;
 import com.exception.EmployeeNotFoundException;
+import com.exception.FinancialRecordException;
 import com.model.Employee;
 
 public class EmployeeService {
@@ -38,7 +39,7 @@ public class EmployeeService {
 
 	}
 
-	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException {
+	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException, FinancialRecordException {
 		List<EmployeeReportData> list = employeeDao.getReport(empid, fyear);
 
 		return list;

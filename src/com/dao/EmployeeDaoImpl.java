@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.dto.EmployeeReportData;
 import com.exception.EmployeeNotFoundException;
+import com.exception.FinancialRecordException;
 import com.model.Employee;
 
 import com.util.DBUtil;
@@ -185,7 +186,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException {
+	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException, FinancialRecordException {
 		Connection conn = DBUtil.getDBConn();
 		List<EmployeeReportData> list = new ArrayList<>();// container
 		// step 1:prepare the statement
@@ -215,7 +216,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			list.add(empReport);
 		}
+
 		DBUtil.dbClose();
+		if (list.isEmpty()) {
+			throw new FinancialRecordException(
+					"Detail report for employee ID " + empid + " and financial year " + fyear + " not available.");
+
+		}
 		return list;
 
 	}

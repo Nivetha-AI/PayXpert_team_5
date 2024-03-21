@@ -1,18 +1,16 @@
 package com.controller;
 
 import java.sql.SQLException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import java.util.List;
 import java.util.Scanner;
 
 import com.dto.EmployeeReportData;
 import com.exception.EmployeeNotFoundException;
+import com.exception.FinancialRecordException;
 import com.exception.ValidationException;
 import com.model.Employee;
-
 import com.service.EmployeeService;
 import com.service.ValidationService;
 
@@ -195,7 +193,7 @@ public class EmployeeController {
 										+ " Record Date: " + emp1.getRecordDate() + " record Type: "
 										+ emp1.getRecordType() + " Financial Amount: " + emp1.getAmount());
 							}
-						} catch (SQLException e) {
+						} catch (SQLException | FinancialRecordException e) {
 							System.out.println(e.getMessage());
 						}
 
@@ -204,7 +202,7 @@ public class EmployeeController {
 						System.out.println("Invalid Input given..");
 						break;
 
-					}//switch ends
+					}// switch ends
 
 				} // while ends
 			} // if ends
@@ -255,7 +253,7 @@ public class EmployeeController {
 										+ " Record Date: " + emp1.getRecordDate() + " record Type: "
 										+ emp1.getRecordType() + " Financial Amount: " + emp1.getAmount());
 							}
-						} catch (SQLException e) {
+						} catch (SQLException | FinancialRecordException e) {
 							System.out.println(e.getMessage());
 						}
 
