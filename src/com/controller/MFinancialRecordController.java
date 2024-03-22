@@ -55,7 +55,7 @@ public class MFinancialRecordController {
 					double amount = sc.nextDouble();
 					System.out.println("Enter the record type: (Income / Expense / Tax  / Payroll / Assets");
 					String recordType = sc.next();
-					financialRecordService.AddFinancialRecord(recordId, empId, recordDate, description, amount,
+					financialRecordService.addFinancialRecord(recordId, empId, recordDate, description, amount,
 							recordType);
 					System.out.println("\nFinancial Record added successfully\n");
 				} catch (EmployeeNotFoundException | DateTimeParseException | SQLException e) {

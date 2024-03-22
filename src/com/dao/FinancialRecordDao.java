@@ -12,7 +12,7 @@ public interface FinancialRecordDao {
 
 	int verifyEmployeeId(int empId)throws EmployeeNotFoundException, SQLException;
 
-	void AddFinancialRecord(int recordId, int empId, LocalDate recordDate, String description, double amount,
+	void addFinancialRecord(int recordId, int empId, LocalDate recordDate, String description, double amount,
 			String recordType)throws SQLException;
 
 	FinancialRecord getFinancialRecordById(int recId) throws FinancialRecordException, SQLException;

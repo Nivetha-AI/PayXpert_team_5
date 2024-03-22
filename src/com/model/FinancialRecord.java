@@ -1,6 +1,7 @@
 package com.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class FinancialRecord {
 	private int id;
@@ -90,6 +91,27 @@ public class FinancialRecord {
 		return "FinancialRecord [id=" + id + ", employeeId=" + employeeId + ", recordDate=" + recordDate
 				+ ", description=" + description + ", amount=" + amount + ", recordType=" + recordType + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(amount, description, employeeId, id, recordDate, recordType);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FinancialRecord other = (FinancialRecord) obj;
+		return Double.doubleToLongBits(amount) == Double.doubleToLongBits(other.amount)
+				&& Objects.equals(description, other.description) && employeeId == other.employeeId && id == other.id
+				&& Objects.equals(recordDate, other.recordDate) && Objects.equals(recordType, other.recordType);
+	}
+	
+	
 	
 }
 

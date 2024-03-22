@@ -17,9 +17,9 @@ public class FinancialRecordService {
 		return financialRecordDao.verifyEmployeeId(empId);
 	}
 
-	public void AddFinancialRecord(int recordId, int empId, LocalDate recordDate, String description, double amount,
+	public void addFinancialRecord(int recordId, int empId, LocalDate recordDate, String description, double amount,
 			String recordType) throws SQLException {
-		financialRecordDao.AddFinancialRecord(recordId, empId, recordDate, description, amount, recordType);	
+		financialRecordDao.addFinancialRecord(recordId, empId, recordDate, description, amount, recordType);	
 	}
 
 	public FinancialRecord getFinancialRecordById(int recId) throws FinancialRecordException, SQLException{

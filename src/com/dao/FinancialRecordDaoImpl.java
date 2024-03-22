@@ -33,7 +33,7 @@ public class FinancialRecordDaoImpl implements FinancialRecordDao {
 	}
 
 	@Override
-	public void AddFinancialRecord(int recordId, int empId, LocalDate recordDate, String description, double amount,
+	public void addFinancialRecord(int recordId, int empId, LocalDate recordDate, String description, double amount,
 			String recordType) throws SQLException {
 		Connection conn = DBUtil.getDBConn();
 		String sql="insert into financial_record values (?,?,?,?,?,?)";
