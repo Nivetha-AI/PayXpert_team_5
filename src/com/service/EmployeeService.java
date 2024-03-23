@@ -22,14 +22,14 @@ public class EmployeeService {
 		return list;
 	}
 
-	public void AddEmployee(Employee emp) throws SQLException {
-		employeeDao.AddEmployee(emp);
+	public void addEmployee(Employee emp) throws SQLException {
+		employeeDao.addEmployee(emp);
 	}
 
 	public void updateEmployee(int eid, String efname, String elname, LocalDate edob, String egender, String eemail,
 			String ephonenumber, String eaddress, String eposition, LocalDate ejoiningdate)
 			throws SQLException, EmployeeNotFoundException {
-		employeeDao.updateEmployee(eid, efname, elname, edob, egender, eemail, ephonenumber, eaddress, eposition,
+	 employeeDao.updateEmployee(eid, efname, elname, edob, egender, eemail, ephonenumber, eaddress, eposition,
 				ejoiningdate);
 
 	}

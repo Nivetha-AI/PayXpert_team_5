@@ -2,6 +2,7 @@ package com.model;
 
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Employee {
   private int id;
@@ -10,11 +11,11 @@ public class Employee {
   private LocalDate dateOfBirth;
   private String gender;
   private String email;
-  private String PhoneNum;
-  private String Address;
-  private String Position;
-  private LocalDate JoiningDate;
-  private LocalDate TerminationDate;
+  private String phoneNum;
+  private String address;
+  private String position;
+  private LocalDate joiningDate;
+  private LocalDate terminationDate;
 public Employee() {}
 public Employee(int id, String firstName, String lastName, LocalDate dateOfBirth, String gender, String email,
 		String phoneNum, String address, String position, LocalDate joiningDate, LocalDate terminationDate) {
@@ -24,11 +25,11 @@ public Employee(int id, String firstName, String lastName, LocalDate dateOfBirth
 	this.dateOfBirth = dateOfBirth;
 	this.gender = gender;
 	this.email = email;
-	PhoneNum = phoneNum;
-	Address = address;
-	Position = position;
-	JoiningDate = joiningDate;
-	TerminationDate = terminationDate;
+	this.phoneNum = phoneNum;
+	this.address = address;
+	this.position = position;
+	this.joiningDate = joiningDate;
+	this.terminationDate = terminationDate;
 }
 public Employee(String firstName, String lastName, LocalDate dateOfBirth, String gender, String email, String phoneNum,
 		String address, String position, LocalDate joiningDate, LocalDate terminationDate) {
@@ -37,11 +38,11 @@ public Employee(String firstName, String lastName, LocalDate dateOfBirth, String
 	this.dateOfBirth = dateOfBirth;
 	this.gender = gender;
 	this.email = email;
-	PhoneNum = phoneNum;
-	Address = address;
-	Position = position;
-	JoiningDate = joiningDate;
-	TerminationDate = terminationDate;
+	this.phoneNum = phoneNum;
+	this.address = address;
+	this.position = position;
+	this.joiningDate = joiningDate;
+	this.terminationDate = terminationDate;
 }
 
 
@@ -82,40 +83,60 @@ public void setEmail(String email) {
 	this.email = email;
 }
 public String getPhoneNum() {
-	return PhoneNum;
+	return phoneNum;
 }
 public void setPhoneNum(String phoneNum) {
-	PhoneNum = phoneNum;
+	this.phoneNum = phoneNum;
 }
 public String getAddress() {
-	return Address;
+	return address;
 }
 public void setAddress(String address) {
-	Address = address;
+	this.address = address;
 }
 public String getPosition() {
-	return Position;
+	return position;
 }
 public void setPosition(String position) {
-	Position = position;
+	this.position = position;
 }
 public LocalDate getJoiningDate() {
-	return JoiningDate;
+	return joiningDate;
 }
 public void setJoiningDate(LocalDate joiningDate) {
-	JoiningDate = joiningDate;
+	this.joiningDate = joiningDate;
 }
 public LocalDate getTerminationDate() {
-	return TerminationDate;
+	return terminationDate;
 }
 public void setTerminationDate(LocalDate terminationDate) {
-	TerminationDate = terminationDate;
+	this.terminationDate = terminationDate;
 }
 @Override
 public String toString() {
 	return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth
-			+ ", gender=" + gender + ", email=" + email + ", PhoneNum=" + PhoneNum + ", Address=" + Address
-			+ ", Position=" + Position + ", JoiningDate=" + JoiningDate + ", TerminationDate=" + TerminationDate + "]";
+			+ ", gender=" + gender + ", email=" + email + ", PhoneNum=" + phoneNum + ", Address=" + address
+			+ ", Position=" + position + ", JoiningDate=" + joiningDate + ", TerminationDate=" + terminationDate + "]";
+}
+@Override
+public int hashCode() {
+	return Objects.hash(address, dateOfBirth, email, firstName, gender, id, joiningDate, lastName, phoneNum, position,
+			terminationDate);
+}
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	Employee other = (Employee) obj;
+	return Objects.equals(address, other.address) && Objects.equals(dateOfBirth, other.dateOfBirth)
+			&& Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+			&& Objects.equals(gender, other.gender) && id == other.id && Objects.equals(joiningDate, other.joiningDate)
+			&& Objects.equals(lastName, other.lastName) && Objects.equals(phoneNum, other.phoneNum)
+			&& Objects.equals(position, other.position) && Objects.equals(terminationDate, other.terminationDate);
 }
 
 

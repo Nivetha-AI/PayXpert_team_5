@@ -14,7 +14,7 @@ public interface EmployeeDao {
 
 	public List<Employee> getAllEmployee() throws SQLException;
 
-	public void AddEmployee(Employee emp) throws SQLException;
+	public void addEmployee(Employee emp) throws SQLException;
 
 	public void updateEmployee(int eid, String efname, String elname, LocalDate edob, String egender, String eemail,
 			String ephonenumber, String eaddress, String eposition, LocalDate ejoiningdate)

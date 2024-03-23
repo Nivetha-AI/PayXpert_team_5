@@ -32,9 +32,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// Iterate over the result set and read db column
 		if (rst.next()) {
 
-			String firstName = rst.getString("First_name");
-			String lastName = rst.getString("Last_name");
-			LocalDate dateOfBirth = LocalDate.parse(rst.getString("Date_of_Birth"));
+			String firstName = rst.getString("first_name");
+			String lastName = rst.getString("last_name");
+			LocalDate dateOfBirth = LocalDate.parse(rst.getString("date_of_Birth"));
 			String gender = rst.getString("gender");
 			String email = rst.getString("email");
 			String phoneNum = rst.getString("phone_num");
@@ -70,9 +70,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 		while (rst.next()) {
 			int id = rst.getInt("Id");
-			String firstName = rst.getString("First_name");
-			String lastName = rst.getString("Last_name");
-			String dateOfBirth = rst.getString("Date_of_Birth");
+			String firstName = rst.getString("first_name");
+			String lastName = rst.getString("last_name");
+			String dateOfBirth = rst.getString("date_of_Birth");
 			String gender = rst.getString("gender");
 			String email = rst.getString("email");
 			String PhoneNum = rst.getString("phone_num");
@@ -110,7 +110,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	}
 
-	public void AddEmployee(Employee emp) throws SQLException {
+	public void addEmployee(Employee emp) throws SQLException {
 		Connection conn = DBUtil.getDBConn();
 		String sql = "insert into employee(first_name ,last_name , date_of_birth, gender , email , Phone_num, address, position , Joining_date) values (?,?,?,?,?,?,?,?,?)";
 		// prepare the statement
@@ -201,18 +201,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		ResultSet rst = pstmt.executeQuery();
 		// Iterate over the result set and read db column
 		if (rst.next()) {
-			String FirstName = rst.getString("First_name");
-			String LastName = rst.getString("Last_name");
+			String firstName = rst.getString("first_name");
+			String lastName = rst.getString("last_name");
 			Double taxableIncome = rst.getDouble("taxable_income");
 			Year taxYear = Year.of(rst.getInt("tax_year"));
 			double taxAmount = rst.getDouble("tax_amount");
-			LocalDate RecordDate = LocalDate.parse(rst.getString("record_date"));
-			String RecordType = rst.getString("record_type");
+			LocalDate recordDate = LocalDate.parse(rst.getString("record_date"));
+			String recordType = rst.getString("record_type");
 			double amount = rst.getDouble("amount");
 
 			// save it in object
-			EmployeeReportData empReport = new EmployeeReportData(FirstName, LastName, taxableIncome, taxYear,
-					taxAmount, RecordDate, RecordType, amount);
+			EmployeeReportData empReport = new EmployeeReportData(firstName, lastName, taxableIncome, taxYear,
+					taxAmount, recordDate, recordType, amount);
 
 			list.add(empReport);
 		}

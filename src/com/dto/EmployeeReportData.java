@@ -2,39 +2,40 @@ package com.dto;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.Objects;
 
 public class EmployeeReportData {
  private int id;
- private String FirstName;
- private String LastName;
+ private String firstName;
+ private String lastName;
  private double taxableIncome;
  private Year taxYear;
  private double taxAmount;
- private LocalDate RecordDate;
- private String RecordType;
+ private LocalDate recordDate;
+ private String recordType;
  private double amount;
 public EmployeeReportData() {}
 public EmployeeReportData(int id, String firstName, String lastName, double taxableIncome, Year taxYear,
 		double taxAmount, LocalDate recordDate, String recordType, double amount) {
 	this.id = id;
-	FirstName = firstName;
-	LastName = lastName;
+	this.firstName = firstName;
+	this.lastName = lastName;
 	this.taxableIncome = taxableIncome;
 	this.taxYear = taxYear;
 	this.taxAmount = taxAmount;
-	RecordDate = recordDate;
-	RecordType = recordType;
+	this.recordDate = recordDate;
+	this.recordType = recordType;
 	this.amount = amount;
 }
 public EmployeeReportData(String firstName, String lastName, double taxableIncome, Year taxYear, double taxAmount,
 		LocalDate recordDate, String recordType, double amount) {
-	FirstName = firstName;
-	LastName = lastName;
+	this.firstName = firstName;
+	this.lastName = lastName;
 	this.taxableIncome = taxableIncome;
 	this.taxYear = taxYear;
 	this.taxAmount = taxAmount;
-	RecordDate = recordDate;
-	RecordType = recordType;
+	this.recordDate = recordDate;
+	this.recordType = recordType;
 	this.amount = amount;
 }
 public int getId() {
@@ -44,16 +45,16 @@ public void setId(int id) {
 	this.id = id;
 }
 public String getFirstName() {
-	return FirstName;
+	return firstName;
 }
 public void setFirstName(String firstName) {
-	FirstName = firstName;
+	this.firstName = firstName;
 }
 public String getLastName() {
-	return LastName;
+	return lastName;
 }
 public void setLastName(String lastName) {
-	LastName = lastName;
+	this.lastName = lastName;
 }
 public double getTaxableIncome() {
 	return taxableIncome;
@@ -74,16 +75,16 @@ public void setTaxAmount(double taxAmount) {
 	this.taxAmount = taxAmount;
 }
 public LocalDate getRecordDate() {
-	return RecordDate;
+	return recordDate;
 }
 public void setRecordDate(LocalDate recordDate) {
-	RecordDate = recordDate;
+	this.recordDate = recordDate;
 }
 public String getRecordType() {
-	return RecordType;
+	return recordType;
 }
 public void setRecordType(String recordType) {
-	RecordType = recordType;
+	this.recordType = recordType;
 }
 public double getAmount() {
 	return amount;
@@ -93,9 +94,29 @@ public void setAmount(double amount) {
 }
 @Override
 public String toString() {
-	return "EmployeeReportData [id=" + id + ", FirstName=" + FirstName + ", LastName=" + LastName + ", taxableIncome="
-			+ taxableIncome + ", taxYear=" + taxYear + ", taxAmount=" + taxAmount + ", RecordDate=" + RecordDate
-			+ ", RecordType=" + RecordType + ", amount=" + amount + "]";
+	return "EmployeeReportData [id=" + id + ", FirstName=" + firstName + ", LastName=" + lastName + ", taxableIncome="
+			+ taxableIncome + ", taxYear=" + taxYear + ", taxAmount=" + taxAmount + ", RecordDate=" + recordDate
+			+ ", RecordType=" + recordType + ", amount=" + amount + "]";
+}
+@Override
+public int hashCode() {
+	return Objects.hash(amount, firstName, id, lastName, recordDate, recordType, taxAmount, taxYear, taxableIncome);
+}
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	EmployeeReportData other = (EmployeeReportData) obj;
+	return Double.doubleToLongBits(amount) == Double.doubleToLongBits(other.amount)
+			&& Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName)
+			&& Objects.equals(recordDate, other.recordDate) && Objects.equals(recordType, other.recordType)
+			&& Double.doubleToLongBits(taxAmount) == Double.doubleToLongBits(other.taxAmount)
+			&& Objects.equals(taxYear, other.taxYear)
+			&& Double.doubleToLongBits(taxableIncome) == Double.doubleToLongBits(other.taxableIncome);
 }
 
 
