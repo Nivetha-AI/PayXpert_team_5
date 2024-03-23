@@ -127,7 +127,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		pstmt.setString(9, emp.getJoiningDate().toString());
 
 		// execute the query
-		pstmt.executeUpdate();// 1:success ,0:failure
+		pstmt.executeUpdate();
 
 		DBUtil.dbClose();
 
@@ -159,7 +159,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		int rowsUpdated = pstmt.executeUpdate();
 
 		if (rowsUpdated == 0) {
-			throw new EmployeeNotFoundException("Employee not found");
+			throw new EmployeeNotFoundException("Employee not found to update");
 		}
 
 		DBUtil.dbClose();
@@ -178,7 +178,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// execute the query
 		int rowsDeleted = pstmt.executeUpdate();
 		if (rowsDeleted == 0) {
-			throw new EmployeeNotFoundException("Employee not found");
+			throw new EmployeeNotFoundException("Employee not found to delete");
 		}
 
 		DBUtil.dbClose();
