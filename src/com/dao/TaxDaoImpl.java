@@ -132,6 +132,22 @@ Connection conn=DBUtil.getDBConn();
 		return tax;
 	}
 
+	@Override
+	public void createEmployees(int years, double taxincome, double amount, int emid) throws SQLException {
+Connection conn=DBUtil.getDBConn();
+		
+		String sql="insert into tax(tax_year,taxable_income,tax_Amount,employee_id) values(?,?,?,?)";
+		
+		PreparedStatement pstmt=conn.prepareStatement(sql);
+		pstmt.setInt(1, years);
+		pstmt.setDouble(2, taxincome);
+		pstmt.setDouble(3, amount);
+		pstmt.setInt(4, emid);
+		
+		pstmt.executeUpdate();
+		
+	}
+
 
 	}
 

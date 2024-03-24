@@ -20,6 +20,9 @@ public interface TaxDao {
 
 
 	public double calculateTax(int empid, int taxyear)throws SQLException;
+
+
+	public void createEmployees(int years, double taxincome, double amount, int emid) throws SQLException;
 	
 
 }

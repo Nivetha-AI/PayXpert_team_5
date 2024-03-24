@@ -31,6 +31,10 @@ public class TaxService {
 	public double calculateTax(int empid, int taxyear) throws SQLException {
 		return taxDao.calculateTax(empid,taxyear);
 	}
+	public void createEmployees(int years, double taxincome, double amount, int emid) throws SQLException {
+		taxDao.createEmployees(years,taxincome,amount,emid);
+		
+	}
 
 			
 

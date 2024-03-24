@@ -16,11 +16,8 @@ public class TaxController {
 		TaxService taxService=new TaxService();
 		while(true)
 		{
-			System.out.println("Press 1. Calculate Tax");
-			System.out.println("Press 2. Get Tax by ID");
-			System.out.println("Press 3. GetTaxForEmployee");
-			System.out.println("Press 4. GetTaxForYear");
-			System.out.println("Press 5. Add Tax Record");
+			System.out.println("Press 1. GetTaxForEmployee");
+			System.out.println("Press 2. GetTaxForYear");
 			System.out.println("Press 0. Exit");
 			int input=s.nextInt();
 			if(input==0)
@@ -30,53 +27,41 @@ public class TaxController {
 			}
 			switch(input)
 			{
-			    case 1:
-				    System.out.println("Calculate Tax");
-				    System.out.println("Enter employee id ");
-					int empid=s.nextInt();
-					System.out.println("Enter the Tax Year");
-					int taxyear=s.nextInt();
-					try {
-						double tax=taxService.calculateTax(empid,taxyear);
-						System.out.println("The tax amount for "+empid+" is "+tax);
-					} catch (SQLException e) {
-						System.out.println(e.getMessage());
-					}
 					
-				
-				case 2:
-					System.out.println("Get Tax By Id");
-					System.out.println("Enter Tax Id");
-					int id = s.nextInt();
-					try {
-						Tax tax = TaxService.getTaxById(id);
-						System.out.println(tax);
-					} 
-					catch (SQLException e) {
-						System.out.println(e.getMessage());
-					}
-					break;
-					
-				case 3:
-					System.out.println("Get Tax for Employee");
-					System.out.println("Enter the Employee Id");
-					int eid = s.nextInt();
-					try {
-						List<Tax> tax = taxService.getTaxByEmployeeId(eid);
-						System.out.println(tax);
+				case 1:
+						System.out.println("Enter the Employee Id");
+						int emid = s.nextInt();
+						try {
+							List<Tax> list = taxService.getTaxByEmployeeId(emid);
+							System.out.println("**************************** Tax of EmployeeId: "+emid+" *************************");
+							System.out.println();
+							System.out.println("tax_id "+" employee_id "+" taxable_income "+" tax_year "+" tax_amount ");
+							for(Tax t:list)
+							{
+								System.out.println(t.getId()+"\t\t"+t.getEmployeeId()+"\t\t"+t.getTaxableincome()+"\t"+t.getAmount()+"\t   "+t.getTaxyear());
+								
+								}
+							System.out.println();
+							System.out.println("*******************************************************************************");
 					} catch (SQLException | EmployeeNotFoundException e) {
 						System.out.println(e.getMessage());
 					}
 					break;
-				case 4:
-					System.out.println("Tax for year");
-					System.out.println("Enter the tax");
+				case 2:
+					System.out.println("Enter the tax year");
 					int year=s.nextInt();
 					try {
 						List<Tax> list = taxService.getTaxForYear(year);
-						for (Tax t : list) {
-							System.out.println(t);
+						System.out.println("**************************** Tax for period "+year+" ********************");
+						System.out.println();
+						System.out.println("tax_id "+" employee_id "+" taxable_income "+" tax_year "+" tax_amount ");
+						for(Tax t:list)
+						{
+							System.out.println(t.getId()+"\t\t"+t.getEmployeeId()+"\t\t"+t.getTaxableincome()+"\t"+t.getAmount()+"\t   "+t.getTaxyear());
 						}
+						System.out.println();
+						System.out.println("***********************************************************************************************");
+					
 					} catch (SQLException |TaxCalculationException e) {
 						System.out.println(e.getMessage());
 					}
