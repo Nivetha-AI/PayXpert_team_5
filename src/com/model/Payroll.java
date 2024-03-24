@@ -1,6 +1,7 @@
 package com.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Payroll {
 	private int payrollId;
@@ -118,6 +119,30 @@ public class Payroll {
 		return "Payroll [payrollId=" + payrollId + ", employeeId=" + employeeId + ", payPeriodStartDate="
 				+ payPeriodStartDate + ", payPeriodEndDate=" + payPeriodEndDate + ", basicSalary=" + basicSalary
 				+ ", overTimePay=" + overTimePay + ", deductions=" + deductions + ", netSalary=" + netSalary + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(basicSalary, deductions, employeeId, netSalary, overTimePay, payPeriodEndDate,
+				payPeriodStartDate, payrollId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Payroll other = (Payroll) obj;
+		return Double.doubleToLongBits(basicSalary) == Double.doubleToLongBits(other.basicSalary)
+				&& Double.doubleToLongBits(deductions) == Double.doubleToLongBits(other.deductions)
+				&& employeeId == other.employeeId
+				&& Double.doubleToLongBits(netSalary) == Double.doubleToLongBits(other.netSalary)
+				&& Double.doubleToLongBits(overTimePay) == Double.doubleToLongBits(other.overTimePay)
+				&& Objects.equals(payPeriodEndDate, other.payPeriodEndDate)
+				&& Objects.equals(payPeriodStartDate, other.payPeriodStartDate) && payrollId == other.payrollId;
 	}
 	
 	

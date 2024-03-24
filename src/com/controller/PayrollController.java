@@ -64,7 +64,6 @@ public class PayrollController {
 				default:
 					System.out.println("Invalid Input");
 					break;
-				
 			}// Switch ends
 		}//while Ends
 		s.close();
