@@ -3,26 +3,25 @@ import java.sql.SQLException;
 
 import com.dao.ValidationDao;
 import com.dao.ValidationDaoImpl;
-import com.exception.EmployeeNotFoundException;
 import com.exception.ValidationException;
 
 public class ValidationService {
 	ValidationDao validationDao = new ValidationDaoImpl();
 
-	public void validateUser(String username) throws SQLException, EmployeeNotFoundException {
-		validationDao.validateUser(username);
+	public void validateUserName(String userName) throws ValidationException, SQLException {
+		validationDao.validateUserName(userName);
 	}
 
-	public void validatePassword(String username, int password) throws SQLException, ValidationException {
-		validationDao.validatePassword(username, password);	
+	public void validatePassword(String userName, String password) throws ValidationException, SQLException {
+		validationDao.validatePassword(userName, password);
 	}
 
-	public int getEmployeeId(String username) throws SQLException {
-		return validationDao.getEmployeeId(username);
+	public String getUserRole(String userName) throws SQLException {
+		return validationDao.getUserRole(userName);
 	}
 
-	public String getPositionForEmployee(int employeeId) throws SQLException {
-		return validationDao.getPositionForEmployee(employeeId);
+	public void createUser(String userName, String password, String role) throws SQLException {
+		validationDao.createUser(userName, password, role);
 	}
 
 	

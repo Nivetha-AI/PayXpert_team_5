@@ -5,82 +5,94 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.exception.EmployeeNotFoundException;
 import com.exception.ValidationException;
 import com.util.DBUtil;
 
 public class ValidationDaoImpl implements ValidationDao{
 
 	@Override
-	public void validateUser(String username) throws SQLException, EmployeeNotFoundException {
+	public void validateUserName(String userName) throws ValidationException , SQLException{
 		Connection conn=DBUtil.getDBConn();
-		String email= "";
-		String sql="select email from employee where email=?";
+		String sql="select username from user";
+		int flag = 0;
+		String uName = null;
 		PreparedStatement pstmt=conn.prepareStatement(sql);
-		pstmt.setString(1, username);
+		
 		/* execute the statement */
 		ResultSet rst= pstmt.executeQuery();
-		if(rst.next()) { 
-			email = rst.getString("email");
+		while(rst.next()) { 
+			uName = rst.getString("username");
+			if(uName.equalsIgnoreCase(userName)) {
+				flag =1;
+			}
 		}
-		if(email.equals("")) {
-			throw new EmployeeNotFoundException("User not found");
+
+		DBUtil.dbClose();
+		if(flag ==0) {
+			throw new ValidationException("Invalid Credentials");
 		}
 		
-		DBUtil.dbClose();
+		
 	}
 
 	@Override
-	public void validatePassword(String username, int password) throws SQLException, ValidationException {
+	public void validatePassword(String userName, String password) throws ValidationException , SQLException{
 		Connection conn=DBUtil.getDBConn();
-		int empID = -1;
-		String sql="select id from employee where email=?";
+		String sql="select password from user where username = ?";
+		int flag = 0;
+		String passWord = null;
+		
 		PreparedStatement pstmt=conn.prepareStatement(sql);
-		pstmt.setString(1, username);
+		pstmt.setString(1, userName);
 		/* execute the statement */
 		ResultSet rst= pstmt.executeQuery();
 		if(rst.next()) { 
-			empID = rst.getInt("id");
+			passWord = rst.getString("password");
+			if(passWord.equalsIgnoreCase(password)) {
+				flag =1;
+			}
 		}
-		if(empID != password) {
-			throw new ValidationException("Password Incorrect");
+
+		DBUtil.dbClose();
+		if(flag ==0) {
+			throw new ValidationException("Invalid Credentials");
 		}
 		
-		DBUtil.dbClose();	
 	}
 
 	@Override
-	public int getEmployeeId(String username) throws SQLException {
+	public String getUserRole(String userName) throws SQLException{
 		Connection conn=DBUtil.getDBConn();
-		int id=-1;
-		String sql="select id from employee where email=?";
+		String sql="select role from user where username = ?";
+		
+		String role = null;
+		
 		PreparedStatement pstmt=conn.prepareStatement(sql);
-		pstmt.setString(1, username);
+		pstmt.setString(1, userName);
 		/* execute the statement */
 		ResultSet rst= pstmt.executeQuery();
 		if(rst.next()) { 
-			id = rst.getInt("id");
+			role = rst.getString("role");
+			return role;
 		}
+
 		DBUtil.dbClose();
-		
-		return id;
+		return null;
 	}
 
 	@Override
-	public String getPositionForEmployee(int employeeId) throws SQLException {
+	public void createUser(String userName, String password, String role) throws SQLException {
 		Connection conn=DBUtil.getDBConn();
-		String position = "";
-		String sql="select position from employee where id=?";
+		String sql="insert into user values(?,?,?)";
 		PreparedStatement pstmt=conn.prepareStatement(sql);
-		pstmt.setInt(1, employeeId);
-		/* execute the statement */
-		ResultSet rst= pstmt.executeQuery();
-		if(rst.next()) { 
-			position = rst.getString("position");
-		}
+		pstmt.setString(1, userName);
+		pstmt.setString(2, password);
+		pstmt.setString(3, role);
+		pstmt.executeUpdate();
 		DBUtil.dbClose();
 		
-		return position;
 	}
+
+	
 
 }

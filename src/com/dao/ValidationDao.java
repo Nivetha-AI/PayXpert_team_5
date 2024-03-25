@@ -2,18 +2,18 @@ package com.dao;
 
 import java.sql.SQLException;
 
-import com.exception.EmployeeNotFoundException;
 import com.exception.ValidationException;
 
 public interface ValidationDao {
 
-	void validateUser(String username) throws SQLException, EmployeeNotFoundException;
+	void validateUserName(String userName) throws ValidationException, SQLException;
 
-	void validatePassword(String username, int password) throws SQLException, ValidationException;
+	void validatePassword(String userName, String password) throws ValidationException, SQLException;
 
-	int getEmployeeId(String username) throws SQLException;
+	String getUserRole(String userName) throws SQLException;
 
-	String getPositionForEmployee(int employeeId) throws SQLException;
+	void createUser(String userName, String password, String role) throws SQLException;
 
+	
 
 }
