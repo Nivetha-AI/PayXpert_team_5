@@ -8,7 +8,7 @@ import com.model.Tax;
 import com.service.TaxService;
 
 public class MTaxController {
-	public static void main(String[] args) throws TaxCalculationException {
+	public static void main(String[] args)  {
 		Scanner s=new Scanner(System.in);
 		TaxService taxService=new TaxService();
 		while(true)
