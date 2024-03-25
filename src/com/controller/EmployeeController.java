@@ -31,7 +31,7 @@ public class EmployeeController {
 			     	int input = sc.nextInt();
 				    
 			     	if(input ==0) {
-			     		System.out.println("Existing ... Thank You");
+			     		System.out.println("Exiting ... Thank You");
 			     		break;
 			     	}
 
