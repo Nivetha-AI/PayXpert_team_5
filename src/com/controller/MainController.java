@@ -98,6 +98,8 @@ public class MainController {
 					}
 
 				} else {
+					System.out.println("Welcome " + userName);
+					System.out.println();
 
 					System.out.println("Press 1. To go to employee module");
 					System.out.println("Press 2. To go to payroll module");
