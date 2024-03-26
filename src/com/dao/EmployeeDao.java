@@ -14,7 +14,7 @@ public interface EmployeeDao {
 
 	public List<Employee> getAllEmployee() throws SQLException, EmployeeNotFoundException;
 
-	public void addEmployee(Employee emp) throws SQLException;
+	public void addEmployee(Employee emp) throws SQLException, EmployeeNotFoundException;
 
 	public void updateEmployee(int eid, String efname, String elname, LocalDate edob, String egender, String eemail,
 			String ephonenumber, String eaddress, String eposition, LocalDate ejoiningdate)

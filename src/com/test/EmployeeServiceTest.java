@@ -3,6 +3,7 @@ package com.test;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,52 @@ public class EmployeeServiceTest {
 		} catch (EmployeeNotFoundException e) {
 			Assert.assertEquals("No Employee Record Found".toLowerCase(), e.getMessage().toLowerCase());
 		}
+	}
+
+	public void addEmployeeTest() {
+		// use case 1
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String firstName = "Nivetha";
+		String lastName = "T";
+		String dateOfBirthStr = "2003-03-29";
+		LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr, formatter);
+		String gender = "female";
+		String email = "niv@gmail.com";
+		String phoneNum = "456788";
+		String address = "chennai";
+		String position1 = "developer";
+
+		Employee emp = new Employee(firstName, lastName, dateOfBirth, gender, email, phoneNum, address, position1,
+				LocalDate.now(), null);
+		try {
+			employeeService.addEmployee(emp);
+		} catch (SQLException e) {
+
+		} catch (EmployeeNotFoundException e) {
+			Assert.assertEquals("No values inserted".toLowerCase(), e.getMessage().toLowerCase());
+		}
+
+		// use case 2
+		firstName = "Nivetha";
+		lastName = "T";
+		dateOfBirthStr = "2003-39-29";// invalid date format so values will not be inserted
+		dateOfBirth = LocalDate.parse(dateOfBirthStr, formatter);
+		gender = "female";
+		email = "niv@gmail.com";
+		phoneNum = "456788";
+		address = "chennai";
+		position1 = "developer";
+
+		Employee emp1 = new Employee(firstName, lastName, dateOfBirth, gender, email, phoneNum, address, position1,
+				LocalDate.now(), null);
+		try {
+			employeeService.addEmployee(emp1);
+		} catch (SQLException e) {
+
+		} catch (EmployeeNotFoundException e) {
+			Assert.assertEquals("No values inserted".toLowerCase(), e.getMessage().toLowerCase());
+		}
+
 	}
 
 	@Test
