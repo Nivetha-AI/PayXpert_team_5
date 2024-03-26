@@ -12,9 +12,9 @@ import com.model.Employee;
 public interface EmployeeDao {
 	public Employee getEmployeeById(int emid) throws SQLException, EmployeeNotFoundException;
 
-	public List<Employee> getAllEmployee() throws SQLException;
+	public List<Employee> getAllEmployee() throws SQLException, EmployeeNotFoundException;
 
-	public void addEmployee(Employee emp) throws SQLException;
+	public void addEmployee(Employee emp) throws SQLException, EmployeeNotFoundException;
 
 	public void updateEmployee(int eid, String efname, String elname, LocalDate edob, String egender, String eemail,
 			String ephonenumber, String eaddress, String eposition, LocalDate ejoiningdate)

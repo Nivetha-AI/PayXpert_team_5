@@ -17,12 +17,12 @@ public class EmployeeService {
 		return employeeDao.getEmployeeById(emid);
 	}
 
-	public List<Employee> getAllEmployee() throws SQLException {
+	public List<Employee> getAllEmployee() throws SQLException, EmployeeNotFoundException {
 		List<Employee> list = employeeDao.getAllEmployee();
 		return list;
 	}
 
-	public void addEmployee(Employee emp) throws SQLException {
+	public void addEmployee(Employee emp) throws SQLException, EmployeeNotFoundException {
 		employeeDao.addEmployee(emp);
 	}
 

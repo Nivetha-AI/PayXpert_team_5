@@ -58,7 +58,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<Employee> getAllEmployee() throws SQLException {
+	public List<Employee> getAllEmployee() throws SQLException, EmployeeNotFoundException {
 		Connection conn = DBUtil.getDBConn();
 		List<Employee> list = new ArrayList<>();// container
 
@@ -106,11 +106,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 
 		DBUtil.dbClose();
+		if (list.isEmpty()) {
+			throw new EmployeeNotFoundException("No Employee Record Found");
+		}
 		return list;
 
 	}
 
-	public void addEmployee(Employee emp) throws SQLException {
+	public void addEmployee(Employee emp) throws SQLException, EmployeeNotFoundException {
 		Connection conn = DBUtil.getDBConn();
 		String sql = "insert into employee(first_name ,last_name , date_of_birth, gender , email , Phone_num, address, position , Joining_date) values (?,?,?,?,?,?,?,?,?)";
 		// prepare the statement
@@ -127,7 +130,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		pstmt.setString(9, emp.getJoiningDate().toString());
 
 		// execute the query
-		pstmt.executeUpdate();
+		int rowsInserted=pstmt.executeUpdate();
+		if (rowsInserted == 0) {
+			throw new EmployeeNotFoundException("No values inserted");
+		}
 
 		DBUtil.dbClose();
 

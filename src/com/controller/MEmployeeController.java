@@ -36,7 +36,7 @@ public class MEmployeeController {
 	     	int input = sc.nextInt();
 	    
 	     	if(input ==0) {
-	     		System.out.println("Existing ... Thank You");
+	     		System.out.println("Exiting ... Thank You");
 	     		break;
 	     	}
 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -64,13 +64,14 @@ public class MEmployeeController {
 					List<Employee> list = employeeService.getAllEmployee();
 					//Iterate over list
 					System.out.println("**********ALL EMPLOYEES *********************");
+					
 	    			for (Employee e: list) {
-	    		    	System.out.println(e.getId() + "  " + e.getFirstName()+ "  "+e.getLastName()
-	    		    	+ " "+e.getDateOfBirth()+ " " +e.getGender() +" "+e.getEmail()+" "+e.getPhoneNum()+" "
-	    		    	+e.getAddress()+ " "+ e.getPosition()+ " "+e.getJoiningDate()+ " "+e.getTerminationDate());
-	    		    	
+	    				 System.out.println("ID: " + e.getId() + "\n" + "First Name: " + e.getFirstName() + "\n" + "Last Name: " + e.getLastName()
+	    		            + "\n" + "Date of Birth: " + e.getDateOfBirth() + "\n" + "Gender: " + e.getGender() + "\n" + "Email: " + e.getEmail() + "\n" + "Phone Number: " + e.getPhoneNum() + "\n"
+	    		            + "Address: " + e.getAddress() + "\n" + "Position: " + e.getPosition() + "\n" + "Joining Date: " + e.getJoiningDate() + "\n" + "Termination Date: " + e.getTerminationDate() + "\n");
+
 	    		    }
-				} catch (SQLException  e) {
+				} catch (SQLException |EmployeeNotFoundException e) {
 					System.out.println(e.getMessage());
 				}
     			  			
@@ -112,8 +113,8 @@ public class MEmployeeController {
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}
-    			catch(Exception e){
-    				System.out.println("Insertion error:"+ e.getMessage());
+    			catch(EmployeeNotFoundException e){
+    				System.out.println(e.getMessage());
     			}	
 					
     			break ;	

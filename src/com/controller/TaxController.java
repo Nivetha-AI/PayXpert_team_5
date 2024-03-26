@@ -11,7 +11,7 @@ import com.service.TaxService;
 public class TaxController {
 	
 	
-	public static void main(String[] args) throws TaxCalculationException {
+	public static void main(String[] args) {
 		Scanner s=new Scanner(System.in);
 		TaxService taxService=new TaxService();
 		while(true)

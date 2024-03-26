@@ -3,6 +3,7 @@ package com.test;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,71 +54,129 @@ public class EmployeeServiceTest {
 		}
 
 	}
-	
+
+	@Test
+	public void getAllEmployee() {
+		// use case 1
+		try {
+			List<Employee> actualList = employeeService.getAllEmployee();
+			Assert.assertNotNull(actualList);
+		} catch (SQLException e) {
+		} catch (EmployeeNotFoundException e) {
+			Assert.assertEquals("No Employee Record Found".toLowerCase(), e.getMessage().toLowerCase());
+		}
+	}
+
+	public void addEmployeeTest() {
+		// use case 1
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String firstName = "Nivetha";
+		String lastName = "T";
+		String dateOfBirthStr = "2003-03-29";
+		LocalDate dateOfBirth = LocalDate.parse(dateOfBirthStr, formatter);
+		String gender = "female";
+		String email = "niv@gmail.com";
+		String phoneNum = "456788";
+		String address = "chennai";
+		String position1 = "developer";
+
+		Employee emp = new Employee(firstName, lastName, dateOfBirth, gender, email, phoneNum, address, position1,
+				LocalDate.now(), null);
+		try {
+			employeeService.addEmployee(emp);
+		} catch (SQLException e) {
+
+		} catch (EmployeeNotFoundException e) {
+			Assert.assertEquals("No values inserted".toLowerCase(), e.getMessage().toLowerCase());
+		}
+
+		// use case 2
+		firstName = "Nivetha";
+		lastName = "T";
+		dateOfBirthStr = "2003-39-29";// invalid date format so values will not be inserted
+		dateOfBirth = LocalDate.parse(dateOfBirthStr, formatter);
+		gender = "female";
+		email = "niv@gmail.com";
+		phoneNum = "456788";
+		address = "chennai";
+		position1 = "developer";
+
+		Employee emp1 = new Employee(firstName, lastName, dateOfBirth, gender, email, phoneNum, address, position1,
+				LocalDate.now(), null);
+		try {
+			employeeService.addEmployee(emp1);
+		} catch (SQLException e) {
+
+		} catch (EmployeeNotFoundException e) {
+			Assert.assertEquals("No values inserted".toLowerCase(), e.getMessage().toLowerCase());
+		}
+
+	}
+
 	@Test
 	public void updateEmployeeTest() {
-		//use case 1
+		// use case 1
 		int eid = 10;
-        String efname = "Ramma";
-        String elname = "Devi";
-        LocalDate edob = LocalDate.parse("2002-03-22");
-        String egender = "Female";
-        String eemail = "ram@gmail.com";
-        String ephonenumber = "987766478";
-        String eaddress = "Bangalore";
-        String eposition = "developer"; 
-        LocalDate ejoiningdate = LocalDate.parse("2022-03-22");
-        
-        
-        try {
-        	employeeService.updateEmployee(eid, efname, elname, edob, egender, eemail, ephonenumber, eaddress, eposition,ejoiningdate);
-        }catch (EmployeeNotFoundException e) {
+		String efname = "Ramma";
+		String elname = "Devi";
+		LocalDate edob = LocalDate.parse("2002-03-22");
+		String egender = "Female";
+		String eemail = "ram@gmail.com";
+		String ephonenumber = "987766478";
+		String eaddress = "Bangalore";
+		String eposition = "developer";
+		LocalDate ejoiningdate = LocalDate.parse("2022-03-22");
+
+		try {
+			employeeService.updateEmployee(eid, efname, elname, edob, egender, eemail, ephonenumber, eaddress,
+					eposition, ejoiningdate);
+		} catch (EmployeeNotFoundException e) {
 			Assert.assertEquals("Employee not found to update".toLowerCase(), e.getMessage().toLowerCase());
 		} catch (SQLException e) {
 		}
-        
-        //use case 2// 29 not found it throws Exception
-        eid = 29;
-        efname = "Ramma";
-        elname = "Devi";
-        edob = LocalDate.parse("2002-03-22");
-        egender = "Female";
-        eemail = "ram@gmail.com";
-        ephonenumber = "987766478";
-        eaddress = "Bangalore";
-        eposition = "developer"; 
-        ejoiningdate = LocalDate.parse("2022-03-22");
-        
-        
-        try {
-        	employeeService.updateEmployee(eid, efname, elname, edob, egender, eemail, ephonenumber, eaddress, eposition,ejoiningdate);
-        }catch (EmployeeNotFoundException e) {
+
+		// use case 2// 29 not found it throws Exception
+		eid = 29;
+		efname = "Ramma";
+		elname = "Devi";
+		edob = LocalDate.parse("2002-03-22");
+		egender = "Female";
+		eemail = "ram@gmail.com";
+		ephonenumber = "987766478";
+		eaddress = "Bangalore";
+		eposition = "developer";
+		ejoiningdate = LocalDate.parse("2022-03-22");
+
+		try {
+			employeeService.updateEmployee(eid, efname, elname, edob, egender, eemail, ephonenumber, eaddress,
+					eposition, ejoiningdate);
+		} catch (EmployeeNotFoundException e) {
 			Assert.assertEquals("Employee not found to update".toLowerCase(), e.getMessage().toLowerCase());
 		} catch (SQLException e) {
 		}
 	}
 
-	
 	@Test
 	public void deleteEmployeeTest() {
-		//use case 1
-		int eid = 10;    
-        try {
-        	employeeService.deleteEmployee(eid);
-        }catch (EmployeeNotFoundException e) {
+		// use case 1
+		int eid = 10;
+		try {
+			employeeService.deleteEmployee(eid);
+		} catch (EmployeeNotFoundException e) {
 			Assert.assertEquals("Employee not found to delete".toLowerCase(), e.getMessage().toLowerCase());
 		} catch (SQLException e) {
 		}
-        
-        //use case 2// 29 not found it throws Exception
-        eid = 29;   
-        try {
-        	employeeService.deleteEmployee(eid);
-        }catch (EmployeeNotFoundException e) {
+
+		// use case 2// 29 not found it throws Exception
+		eid = 29;
+		try {
+			employeeService.deleteEmployee(eid);
+		} catch (EmployeeNotFoundException e) {
 			Assert.assertEquals("Employee not found to delete".toLowerCase(), e.getMessage().toLowerCase());
 		} catch (SQLException e) {
 		}
 	}
+
 	@Test
 	public void getReportTest() {
 		// Use case 1
@@ -127,52 +186,37 @@ public class EmployeeServiceTest {
 				LocalDate.parse("2022-03-21"), "Tax", 3400000);
 		List<EmployeeReportData> expectedList = new ArrayList<>();
 		expectedList.add(expectedReport);
+
 		try {
-			List<EmployeeReportData> actualList = employeeService.getReport(empid, fyear);
-			Assert.assertEquals(expectedList.size(), actualList.size());
-			int i = 0;
-			for (EmployeeReportData expectedItem : expectedList) {
-				Assert.assertEquals(expectedItem, actualList.get(i));
-				i++;
-			}
+			Assert.assertEquals(expectedList, employeeService.getReport(empid, fyear));
 		} catch (SQLException e) {
 
-			e.printStackTrace();
 		} catch (FinancialRecordException e) {
 			Assert.assertEquals(
 					("Detail report for employee ID " + empid + " and financial year " + fyear + " not available.")
 							.toLowerCase(),
 					e.getMessage().toLowerCase());
-
 		}
 
-		// use case 3
+		// use case 2
 		empid = 8;
 		fyear = Integer.parseInt("2023");
 		expectedReport = new EmployeeReportData("Deepika", "Raman", 58000, Year.parse("2021"), 5800,
 				LocalDate.parse("2023-03-29"), "Expense", 20000000);
 		expectedList = new ArrayList<>();
 		expectedList.add(expectedReport);
-		try {
-			List<EmployeeReportData> actualList = employeeService.getReport(empid, fyear);
-			Assert.assertEquals(expectedList.size(), actualList.size());
-			int i = 0;
-			for (EmployeeReportData expectedItem : expectedList) {
-				Assert.assertEquals(expectedItem, actualList.get(i));
-				i++;
-			}
-		} catch (SQLException e) {
 
-			e.printStackTrace();
+		try {
+			Assert.assertEquals(expectedList, employeeService.getReport(empid, fyear));
+		} catch (SQLException e) {
 		} catch (FinancialRecordException e) {
 			Assert.assertEquals(
 					("Detail report for employee ID " + empid + " and financial year " + fyear + " not available.")
 							.toLowerCase(),
 					e.getMessage().toLowerCase());
-
 		}
 
-		// use case 2
+		// use case 3
 		empid = 3;
 		fyear = Integer.parseInt("2020");
 		expectedReport = new EmployeeReportData("Bala", "Ganesh", 100000, Year.parse("2024"), 15000,
@@ -180,22 +224,13 @@ public class EmployeeServiceTest {
 		expectedList = new ArrayList<>();
 		expectedList.add(expectedReport);
 		try {
-			List<EmployeeReportData> actualList = employeeService.getReport(empid, fyear);
-			Assert.assertEquals(expectedList.size(), actualList.size());
-			int i = 0;
-			for (EmployeeReportData expectedItem : expectedList) {
-				Assert.assertEquals(expectedItem, actualList.get(i));
-				i++;
-			}
+			Assert.assertEquals(expectedList, employeeService.getReport(empid, fyear));
 		} catch (SQLException e) {
-
-			e.printStackTrace();
 		} catch (FinancialRecordException e) {
 			Assert.assertEquals(
 					("Detail report for employee ID " + empid + " and financial year " + fyear + " not available.")
 							.toLowerCase(),
 					e.getMessage().toLowerCase());
-
 		}
 
 	}

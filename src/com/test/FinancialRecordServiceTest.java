@@ -137,4 +137,35 @@ public class FinancialRecordServiceTest {
 
 	}
 
+	@Test
+	public void removeFinancialRecordByEmployeeTest() {
+		// Use case 1
+		int empId = 1000;
+		try {
+			financialRecordService.removeFinancialRecordByEmployee(empId);
+		} catch (SQLException e) {
+		} catch (FinancialRecordException e) {
+			Assert.assertEquals("No record found with this employee", e.getMessage());
+		}
+
+		// Use case 2
+		empId = 1001;
+		try {
+			financialRecordService.removeFinancialRecordByEmployee(empId);
+		} catch (SQLException e) {
+		} catch (FinancialRecordException e) {
+			Assert.assertEquals("No record found with this employee", e.getMessage());
+		}
+
+		// Use case 3
+		empId = 1003;
+		try {
+			financialRecordService.removeFinancialRecordByEmployee(empId);
+		} catch (SQLException e) {
+		} catch (FinancialRecordException e) {
+			Assert.assertEquals("No record found with this employee", e.getMessage());
+		}
+
+	}
+
 }
