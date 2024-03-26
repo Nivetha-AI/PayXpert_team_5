@@ -22,14 +22,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public Employee getEmployeeById(int emid) throws SQLException, EmployeeNotFoundException {
 		Connection conn = DBUtil.getDBConn();
-		// step 1:prepare the statement
+
 		String sql = "select * from employee where id=?";
 		PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
-		// Attach the value to ?
+
 		pstmt.setInt(1, emid);
-		// execute the statement
+
 		ResultSet rst = pstmt.executeQuery();
-		// Iterate over the result set and read db column
+
 		if (rst.next()) {
 
 			String firstName = rst.getString("first_name");
@@ -47,7 +47,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				terminationDate = LocalDate.parse(terminationDateString);
 			}
 
-			// save it in object
+			
 			Employee e = new Employee(emid, firstName, lastName, dateOfBirth, gender, email, phoneNum, address,
 					position, joiningDate, terminationDate);
 			return e;
@@ -100,8 +100,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			}
 
-			// save it in object
-
 			list.add(e);
 		}
 
@@ -116,9 +114,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public void addEmployee(Employee emp) throws SQLException, EmployeeNotFoundException {
 		Connection conn = DBUtil.getDBConn();
 		String sql = "insert into employee(first_name ,last_name , date_of_birth, gender , email , Phone_num, address, position , Joining_date) values (?,?,?,?,?,?,?,?,?)";
-		// prepare the statement
+
 		PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
-		// attach the values to ?
+	
 		pstmt.setString(1, emp.getFirstName());
 		pstmt.setString(2, emp.getLastName());
 		pstmt.setString(3, emp.getDateOfBirth().toString());
@@ -129,8 +127,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		pstmt.setString(8, emp.getPosition());
 		pstmt.setString(9, emp.getJoiningDate().toString());
 
-		// execute the query
-		int rowsInserted=pstmt.executeUpdate();
+		int rowsInserted = pstmt.executeUpdate();
 		if (rowsInserted == 0) {
 			throw new EmployeeNotFoundException("No values inserted");
 		}
@@ -147,10 +144,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 		String sql = "update employee set first_name=? ,last_name=? , date_of_birth=? ,"
 				+ " gender=? , email=?,phone_num=?,address=? , position=?, joining_date=?  where id =?";
-		// prepare the statement
+		
 
 		PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
-		// attach the values to ?
+		
 		pstmt.setString(1, efname);
 		pstmt.setString(2, elname);
 		pstmt.setDate(3, java.sql.Date.valueOf(edob));
@@ -161,7 +158,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		pstmt.setString(8, eposition);
 		pstmt.setDate(9, java.sql.Date.valueOf(ejoiningdate));
 		pstmt.setInt(10, eid);
-		// execute the query
 		int rowsUpdated = pstmt.executeUpdate();
 
 		if (rowsUpdated == 0) {
@@ -176,12 +172,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public void deleteEmployee(int id) throws EmployeeNotFoundException, SQLException {
 		Connection conn = DBUtil.getDBConn();
 		String sql = "delete from employee where id =?";
-		// prepare the statement
+		
 
 		PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
-		// attach the values to ?
+		
 		pstmt.setInt(1, id);
-		// execute the query
+		
 		int rowsDeleted = pstmt.executeUpdate();
 		if (rowsDeleted == 0) {
 			throw new EmployeeNotFoundException("Employee not found to delete");
@@ -195,17 +191,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public List<EmployeeReportData> getReport(int empid, int fyear) throws SQLException, FinancialRecordException {
 		Connection conn = DBUtil.getDBConn();
 		List<EmployeeReportData> list = new ArrayList<>();// container
-		// step 1:prepare the statement
 		String sql = "select e.first_name , e.last_name , t.taxable_income ,t.tax_year, t.tax_amount , f.record_date , f.record_type,f.amount "
 				+ " from tax t join employee e on e.id=t.employee_id join financial_record f on e.id=f.employee_id where e.id=? and year(f.record_date)=?";
 
 		PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
-		// Attach the value to ?
+		
 		pstmt.setInt(1, empid);
 		pstmt.setInt(2, fyear);
-		// execute the statement
+		
 		ResultSet rst = pstmt.executeQuery();
-		// Iterate over the result set and read db column
+		
 		if (rst.next()) {
 			String firstName = rst.getString("first_name");
 			String lastName = rst.getString("last_name");
@@ -216,7 +211,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			String recordType = rst.getString("record_type");
 			double amount = rst.getDouble("amount");
 
-			// save it in object
+			
 			EmployeeReportData empReport = new EmployeeReportData(firstName, lastName, taxableIncome, taxYear,
 					taxAmount, recordDate, recordType, amount);
 

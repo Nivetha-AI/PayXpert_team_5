@@ -158,7 +158,7 @@ public class MEmployeeController {
     			
     			break;
     		case 5:
-    			// if 4 is pressed , we come here...
+    			
     			System.out.println("Enter Employee Id to Delete");
     			int id = sc.nextInt();
     			try {
