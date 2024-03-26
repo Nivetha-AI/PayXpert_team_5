@@ -113,8 +113,8 @@ public class MEmployeeController {
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}
-    			catch(Exception e){
-    				System.out.println("Insertion error:"+ e.getMessage());
+    			catch(EmployeeNotFoundException e){
+    				System.out.println(e.getMessage());
     			}	
 					
     			break ;	

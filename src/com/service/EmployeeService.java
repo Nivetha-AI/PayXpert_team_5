@@ -22,7 +22,7 @@ public class EmployeeService {
 		return list;
 	}
 
-	public void addEmployee(Employee emp) throws SQLException {
+	public void addEmployee(Employee emp) throws SQLException, EmployeeNotFoundException {
 		employeeDao.addEmployee(emp);
 	}
 
