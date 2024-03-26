@@ -58,7 +58,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<Employee> getAllEmployee() throws SQLException {
+	public List<Employee> getAllEmployee() throws SQLException, EmployeeNotFoundException {
 		Connection conn = DBUtil.getDBConn();
 		List<Employee> list = new ArrayList<>();// container
 
@@ -106,6 +106,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 
 		DBUtil.dbClose();
+		if (list.isEmpty()) {
+			throw new EmployeeNotFoundException("No Employee Record Found");
+		}
 		return list;
 
 	}

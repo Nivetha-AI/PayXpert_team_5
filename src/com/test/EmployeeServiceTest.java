@@ -53,6 +53,18 @@ public class EmployeeServiceTest {
 		}
 
 	}
+	@Test
+	public void getAllEmployee() {
+		// use case 1
+		try {
+			List<Employee> actualList =employeeService.getAllEmployee();
+			 Assert.assertNotNull(actualList);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (EmployeeNotFoundException e) {
+			Assert.assertEquals("No Employee Record Found".toLowerCase(), e.getMessage().toLowerCase());
+		}
+	}
 	
 	@Test
 	public void updateEmployeeTest() {
@@ -146,7 +158,7 @@ public class EmployeeServiceTest {
 
 		}
 
-		// use case 3
+		// use case 2
 		empid = 8;
 		fyear = Integer.parseInt("2023");
 		expectedReport = new EmployeeReportData("Deepika", "Raman", 58000, Year.parse("2021"), 5800,
@@ -172,7 +184,7 @@ public class EmployeeServiceTest {
 
 		}
 
-		// use case 2
+		// use case 3
 		empid = 3;
 		fyear = Integer.parseInt("2020");
 		expectedReport = new EmployeeReportData("Bala", "Ganesh", 100000, Year.parse("2024"), 15000,

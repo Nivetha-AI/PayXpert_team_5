@@ -12,7 +12,7 @@ import com.model.Employee;
 public interface EmployeeDao {
 	public Employee getEmployeeById(int emid) throws SQLException, EmployeeNotFoundException;
 
-	public List<Employee> getAllEmployee() throws SQLException;
+	public List<Employee> getAllEmployee() throws SQLException, EmployeeNotFoundException;
 
 	public void addEmployee(Employee emp) throws SQLException;
 

@@ -71,7 +71,7 @@ public class MEmployeeController {
 	    		            + "Address: " + e.getAddress() + "\n" + "Position: " + e.getPosition() + "\n" + "Joining Date: " + e.getJoiningDate() + "\n" + "Termination Date: " + e.getTerminationDate() + "\n");
 
 	    		    }
-				} catch (SQLException  e) {
+				} catch (SQLException |EmployeeNotFoundException e) {
 					System.out.println(e.getMessage());
 				}
     			  			
