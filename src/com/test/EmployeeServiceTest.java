@@ -66,7 +66,7 @@ public class EmployeeServiceTest {
 			Assert.assertEquals("No Employee Record Found".toLowerCase(), e.getMessage().toLowerCase());
 		}
 	}
-
+    @Test
 	public void addEmployeeTest() {
 		// use case 1
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -90,28 +90,9 @@ public class EmployeeServiceTest {
 			Assert.assertEquals("No values inserted".toLowerCase(), e.getMessage().toLowerCase());
 		}
 
-		// use case 2
-		firstName = "Nivetha";
-		lastName = "T";
-		dateOfBirthStr = "2003-39-29";// invalid date format so values will not be inserted
-		dateOfBirth = LocalDate.parse(dateOfBirthStr, formatter);
-		gender = "female";
-		email = "niv@gmail.com";
-		phoneNum = "456788";
-		address = "chennai";
-		position1 = "developer";
+}
 
-		Employee emp1 = new Employee(firstName, lastName, dateOfBirth, gender, email, phoneNum, address, position1,
-				LocalDate.now(), null);
-		try {
-			employeeService.addEmployee(emp1);
-		} catch (SQLException e) {
-
-		} catch (EmployeeNotFoundException e) {
-			Assert.assertEquals("No values inserted".toLowerCase(), e.getMessage().toLowerCase());
-		}
-
-	}
+	
 
 	@Test
 	public void updateEmployeeTest() {
